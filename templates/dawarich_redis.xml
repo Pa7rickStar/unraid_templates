@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>dawarich_redis</Name>
+  <Repository>redis:7.4-alpine</Repository>
+  <Registry>https://registry.hub.docker.com/_/redis/</Registry>
+  <Branch>
+    <Tag>7.4-alpine</Tag>
+    <TagDescription>Redis 7.4-alpine in a light weight Alpine Linux container</TagDescription>
+  </Branch>
+  <Network>bridge</Network>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/193769-support-pa7rickstar-docker-templates/</Support>
+  <ReadMe>https://github.com/Freika/dawarich/blob/master/docs/How_to_install_Dawarich_using_Docker.md</ReadMe>
+  <Project>https://dawarich.app</Project>
+  <Overview>This app sets up a Redis database container for Dawarich.&#xD;
+&#xD;
+Dawarich is a self-hosted web app designed to replace Google Timeline (aka Google Location History). Visualize your data on an interactive map, import your location history from Google Maps Timeline and Owntracks, and explore statistics like the number of countries and cities visited, total distance traveled, and more!&#xD;
+&#xD;
+Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. Based on official Redis Docker image.&#xD;
+NOTE:&#xD;
+Do not use autoupdate and do not update any Dawarich container backing up your data first and checking for breaking changes in the updating guides.&#xD;
+https://dawarich.app/docs/updating-guides&#xD;
+https://dawarich.app/docs/tutorials/backup-and-restore</Overview>
+  <Beta>False</Beta>
+  <Category>MediaApp:Photos MediaServer:Photos Productivity: Tools: Other: Status:Stable</Category>
+  <ExtraSearchTerms>photo album share image gallery timeline location history google maps owntracks immich sidekick sidekiq companion redis database dawarich</ExtraSearchTerms>
+  <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/redis-icon.png</Icon>
+  <TemplateURL>https://raw.githubusercontent.com/pa7trickstar/unraid_templates/main/templates/dawarich_db.xml</TemplateURL>
+  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/map.jpeg</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/stats.jpeg</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/imports.jpeg</Screenshot>
+  <Maintainer>
+    <WebPage>https://github.com/pa7rickstar</WebPage>
+  </Maintainer>
+  <Changes>
+    ### 2025-09-25
+
+    Initial release
+  </Changes>
+  <Requires>For Dawarich to run 4 docker containers are required:&#xD;
+- dawarich_db - PostGIS database&#xD;
+- dawarich_redis - Redis database&#xD;
+- dawarich_sidekiq - Sidekiq worker (for background jobs)&#xD;
+- dawarich_app - Dawarich web application</Requires>
+  <ExtraParams>--restart=always --health-cmd='redis-cli ping || exit 1' --health-interval=10s --health-retries=5 --health-start-period=30s --health-timeout=10s</ExtraParams>
+  <PostArgs>redis-server</PostArgs>
+  <Config Name="Shared Path" Target="/data" Default="/mnt/user/appdata/dawarich/shared" Mode="rw" Description="Path for shared data between Dawarich app and redis" Type="Path" Display="always-hide" Required="true" Mask="false">/mnt/user/appdata/dawarich/shared</Config>
+  <Config Name="Redis Port" Target="6379" Default="6379" Mode="tcp" Description="Port of the Redis server" Type="Port" Display="always-hide" Required="true" Mask="{8}">6379</Config>
+</Container>
