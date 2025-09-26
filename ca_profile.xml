@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Maintainer>
+  <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/avatar.png</Icon>
+  <Profile>
+    Creating Docker containers from the comfort of my pineapple. I always try to make containers which work out of the box and use official sources as much as possible.
+  </Profile>
+  <DonateLink>https://buymeacoffee.com/pa7rickstar</DonateLink>
+  <DonateText>If you like my work please consider Donating.</DonateText>
+</Maintainer>
