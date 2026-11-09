@@ -7,45 +7,49 @@
       <Tag>17-3.5-alpine</Tag>
       <TagDescription>PostGIS 17-3.5 in a light weight Alpine Linux container</TagDescription>
   </Branch>
-  <Network>bridge</Network>
+  <Network>dawarich</Network>
+  <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/193769-support-pa7rickstar-docker-templates/</Support>
-  <ReadMe>https://github.com/Freika/dawarich/blob/master/docs/How_to_install_Dawarich_using_Docker.md</ReadMe>
   <Project>https://dawarich.app</Project>
-  <Overview>This app sets up a PostGIS database container for Dawarich.&#xD;
-&#xD;
-Dawarich is a self-hosted web app designed to replace Google Timeline (aka Google Location History). Visualize your data on an interactive map, import your location history from Google Maps Timeline and Owntracks, and explore statistics like the number of countries and cities visited, total distance traveled, and more!&#xD;
-&#xD;
-PostGIS is a spatial database extender for PostgreSQL object-relational database. The postgis/postgis image provides tags for running Postgres with PostGIS extensions installed.&#xD;
-NOTE:&#xD;
-Do not use autoupdate and do not update any Dawarich container backing up your data first and checking for breaking changes in the updating guides.&#xD;
-https://dawarich.app/docs/updating-guides&#xD;
-https://dawarich.app/docs/tutorials/backup-and-restore</Overview>
+  <ReadMe>https://dawarich.app/docs/self-hosting/installation/unraid/</ReadMe>
+  <Overview>PostGIS database container for Dawarich.&#13;
+PostGIS is a spatial database extender for PostgreSQL object-relational database. The postgis/postgis image provides tags for running Postgres with PostGIS extensions installed.&#13;
+&#13;
+Dawarich is a self-hosted web app designed to replace Google Timeline (aka Google Location History). Visualize your data on an interactive map, import your location history from Google Maps Timeline and Owntracks, and explore statistics like the number of countries and cities visited, total distance traveled, and more!&#13;
+&#13;
+NOTE:&#13;
+Do not use autoupdate and do not update any Dawarich container without backing up your data first and checking for breaking changes in the updating guides.&#13;
+https://dawarich.app/docs/self-hosting/updating/&#13;
+https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview>
   <Beta>False</Beta>
   <Category>MediaApp:Photos MediaServer:Photos Productivity: Tools: Other: Status:Stable</Category>
   <ExtraSearchTerms>photo album share image gallery timeline location history google maps owntracks immich sidekick sidekiq companion postgres postgressql postgis database dawarich</ExtraSearchTerms>
-  <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/postgis-icon.png</Icon>
   <TemplateURL>https://raw.githubusercontent.com/pa7trickstar/unraid_templates/main/templates/dawarich_db.xml</TemplateURL>
-  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/map.jpeg</Screenshot>
-  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/stats.jpeg</Screenshot>
-  <Screenshot>https://raw.githubusercontent.com/Freika/dawarich/master/screenshots/imports.jpeg</Screenshot>
+  <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/postgis-icon.png</Icon>
   <Maintainer>
     <WebPage>https://github.com/pa7rickstar</WebPage>
   </Maintainer>
   <Changes>
+    ### 2026-11-08
+
+    Update Dawarich requirements and documentation links
+
     ### 2025-09-25
 
     Initial release
   </Changes>
-  <Requires>For Dawarich to run 4 docker containers are required:&#xD;
-- dawarich_db - PostGIS database&#xD;
-- dawarich_redis - Redis database&#xD;
-- dawarich_sidekiq - Sidekiq worker (for background jobs)&#xD;
-- dawarich_app - Dawarich web application</Requires>
   <ExtraParams>--restart=always --shm-size=1g --health-cmd='pg_isready -U postgres -d dawarich_development || exit 1' --health-interval=10s --health-retries=5 --health-start-period=30s --health-timeout=10s</ExtraParams>
-  <Config Name="Data directory" Target="/var/lib/postgresql/data" Default="/mnt/user/appdata/dawarich/db_data" Mode="rw" Description="" Type="Path" Display="always-hide" Required="true" Mask="false">/mnt/user/appdata/dawarich/db_data</Config>
-  <Config Name="Database name" Target="POSTGRES_DB" Default="dawarich_development" Mode="" Description="Name of the database" Type="Variable" Display="always" Required="true" Mask="false">dawarich_development</Config>
-  <Config Name="Database port" Target="5432" Default="5432" Mode="tcp" Description="Port of the PostGIS server.  Required when the database container is not in the same network or specified by IP rather than container name" Type="Port" Display="always-hide" Required="false" Mask="false"/>
-  <Config Name="Database username" Target="POSTGRES_USER" Default="postgres" Mode="" Description="Username for the database" Type="Variable" Display="always" Required="true" Mask="false">postgres</Config>
-  <Config Name="Database password" Target="POSTGRES_PASSWORD" Default="postgres" Mode="" Description="Password for postgres role" Type="Variable" Display="always-hide" Required="true" Mask="true">postgres</Config>
+<DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
+<DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
+  <Requires>For Dawarich production 3 docker containers are required:&#xD;
+- dawarich_app - web app including sidekiq worker for background jobs
+- dawarich_db - PostGIS database&#xD;
+- dawarich_redis - Redis database</Requires>
+  <Config Name="Data directory" Target="/var/lib/postgresql/data" Default="/mnt/cache/appdata/dawarich/db_data" Mode="rw" Description="Persistent PostgreSQL database directory. Stores Dawarich's database and must be preserved across container updates." Type="Path" Display="always-hide" Required="true" Mask="false">/mnt/cache/appdata/dawarich/db_data</Config>
+  <Config Name="Database username" Target="POSTGRES_USER" Default="postgres" Mode="" Description="PostgreSQL username. Must match DATABASE_USERNAME in the Dawarich app container." Type="Variable" Display="always" Required="true" Mask="false">postgres</Config>
+  <Config Name="Database password" Target="POSTGRES_PASSWORD" Default="postgres" Mode="" Description="PostgreSQL password. Must match DATABASE_PASSWORD in the Dawarich app container." Type="Variable" Display="always-hide" Required="true" Mask="true"/>
+  <Config Name="Database name" Target="POSTGRES_DB" Default="dawarich_development" Mode="" Description="PostgreSQL database name. Must match DATABASE_NAME in the Dawarich app container. Using 'dawarich_development' from a pre-production build is supported with dawarich_app running in production mode." Type="Variable" Display="always-hide" Required="true" Mask="false">dawarich_development</Config>
+  <Config Name="Database port" Target="5432" Default="5432" Mode="tcp" Description="Optional host port for external PostgreSQL access. Containers on the same Docker network connect using port 5432." Type="Port" Display="always" Required="false" Mask="false">5433</Config>
+  <TailscaleStateDir/>
 </Container>

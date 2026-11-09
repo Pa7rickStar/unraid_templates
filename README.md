@@ -1,42 +1,46 @@
 # Creating Unraid Docker containers from the comfort of my pineapple 🍍
 
+## dawarich_app
+
+[Dawarich](https://dawarich.app) is a self-hosted alternative to Google Timeline (Google Location History). Visualize location history on an interactive map, import location data and explore travel statistics.
+
+The production setup requires three containers on the `dawarich` Docker network:
+
+- `dawarich_app` — Web application with embedded Sidekiq for background jobs
+- `dawarich_db` — PostgreSQL database with PostGIS
+- `dawarich_redis` — Redis for caching and background jobs
+
+### Documentation
+
+- [Unraid installation](https://dawarich.app/docs/self-hosting/installation/unraid/)
+- [Environment variables](https://dawarich.app/docs/self-hosting/environment-variables/)
+- [Updating guides](https://dawarich.app/docs/self-hosting/updating/)
+- [Backup and restore](https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/)
+
+> [!IMPORTANT]
+> Do not enable automatic updates for Dawarich containers. Back up the database and persistent files, review the updating guides for breaking changes, and complete any required migrations before updating further.
+
 ## dawarich_db
 
-This app sets up a [PostGIS](https://postgis.net) database container for Dawarich.
+A [PostGIS](https://postgis.net) database container for Dawarich, based on the [postgis/postgis](https://hub.docker.com/r/postgis/postgis) Docker image.
 
-- Dawarich is a self-hosted web app designed to replace Google Timeline (aka Google Location History). Visualize your data on an interactive map, import your location history from Google Maps Timeline and Owntracks, and explore statistics like the number of countries and cities visited, total distance traveled, and more!
-- PostGIS is a spatial database extender for PostgreSQL object-relational database. The postgis/postgis image provides tags for running Postgres with PostGIS extensions installed.
-
-> [!NOTE]
->
-> Do not use autoupdate and do not update any Dawarich container backing up your data first and checking for breaking changes in the updating guides.
->
-> - [updating-guides](https://dawarich.app/docs/updating-guides)
-> - [backup-and-restore](https://dawarich.app/docs/tutorials/backup-and-restore)
+Uses PostgreSQL 17 with PostGIS 3.5 and persistent database storage.
 
 ## dawarich_redis
 
-This app sets up a [Redis](https://redis.io) database container for Dawarich.
+A [Redis](https://redis.io) container for Dawarich, based on the [official Redis Docker image](https://hub.docker.com/_/redis).
 
-- Dawarich is a self-hosted web app designed to replace Google Timeline (aka Google Location History). Visualize your data on an interactive map, import your location history from Google Maps Timeline and Owntracks, and explore statistics like the number of countries and cities visited, total distance traveled, and more!
-- Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. Based on official Redis Docker image.
-
-> [!NOTE]
->
-> Do not use autoupdate and do not update any Dawarich container backing up your data first and checking for breaking changes in the updating guides.
->
-> - [updating-guides](https://dawarich.app/docs/updating-guides)
-> - [backup-and-restore](https://dawarich.app/docs/tutorials/backup-and-restore)
+Provides caching and background-job queues, with persistent storage for Redis data.
 
 ## photon
 
-[Photon](https://github.com/komoot/photon) is an open-source geocoding solution built for OpenStreetMap (OSM) data, providing features such as search-as-you-type and reverse geocoding.
+[Photon](https://github.com/komoot/photon) is an open-source geocoding solution based on OpenStreetMap (OSM), supporting address search, search-as-you-type, and reverse geocoding.
 
-This CA uses [rtuszik's unofficial Docker image](https://github.com/rtuszik/photon-docker/tree/main) for running Photon locally, enhancing data privacy and integration capabilities with services like Dawarich.
+This template uses [rtuszik's unofficial Photon Docker image](https://github.com/rtuszik/photon-docker) to run Photon locally, offering a self-hosted geocoding service for applications such as Dawarich.
 
 ## Donate
 
-I always try to make containers which work out of the box (for those who don't want to tinker around with docker) and use official sources as much as possible.
+I aim to create unRAID templates that work out of the box, using official sources wherever possible.
 
-For my own repos you are welcome to <a href="https://www.buymeacoffee.com/pa7rickstar" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 25px !important;width: 90px !important;" ></a>
-In case I'm just creating an unraid template for other peoples projects please consider donating to them instead.
+For my own projects, you're welcome to <a href="https://www.buymeacoffee.com/pa7rickstar" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 25px !important;width: 90px !important;" ></a>
+When I'm just providing an unRAID template for someone else's project, please consider donating to the original developers instead.

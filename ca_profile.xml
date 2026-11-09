@@ -5,5 +5,5 @@
     Creating Docker containers from the comfort of my pineapple. I always try to make containers which work out of the box and use official sources as much as possible.
   </Profile>
   <DonateLink>https://buymeacoffee.com/pa7rickstar</DonateLink>
-  <DonateText>If you like my work please consider Donating.</DonateText>
+  <DonateText>For my own projects, you're welcome to buy me a coffee. When I'm just providing an unRAID template for someone else's project, please consider donating to the original developers instead.</DonateText>
 </Maintainer>

@@ -1,44 +1,59 @@
 <?xml version="1.0"?>
 <Container version="2">
-  <Name>Photon</Name>
+  <Name>photon</Name>
   <Repository>rtuszik/photon-docker</Repository>
-  <Branch>
-    <Tag>latest</Tag>
-    <TagDescription>latest</TagDescription>
-  </Branch>
   <Registry>https://hub.docker.com/r/rtuszik/photon-docker</Registry>
   <Network>bridge</Network>
-  <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/193769-support-pa7rickstar-docker-templates/</Support>
   <Project>https://github.com/rtuszik/photon-docker</Project>
   <ReadMe>https://github.com/komoot/photon</ReadMe>
+  <DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
+  <DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
   <Overview>Photon is an open-source geocoding solution built for OpenStreetMap (OSM) data, providing features such as search-as-you-type and reverse geocoding.&#xD;
 &#xD;
 This CA uses rtuszik's unofficial Docker image (see Project) for running Photon locally, enhancing data privacy and integration capabilities with services like Dawarich&#x2060;.</Overview>
   <Category>Tools: Network:Privacy</Category>
   <ExtraSearchTerms>OSM geocoder reverse geocoding address address lookup place location dawarich</ExtraSearchTerms>
+  <TemplateURL>https://raw.githubusercontent.com/pa7rickstar/unraid_templates/main/templates/photon.xml</TemplateURL>
   <Beta>False</Beta>
-  <WebUI>http://[IP]:[PORT:2322]/</WebUI>
-  <TemplateURL/>
+  <WebUI>http://[IP]:[PORT:2322]/api?q=Harare</WebUI>
   <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/photon-icon.png</Icon>
+  <Changes>
+    ### 2026-11-09
+
+    - Add selectable regions, update strategies, and logging levels.
+    - Add configurable download retries, checksum verification, and disk space checks.
+    - Add support for custom index URLs, JVM parameters, and Photon startup options.
+    - Add optional Apprise notifications and Prometheus metrics.
+    - Update environment variable descriptions and defaults.
+    - Update documentation links, icon, and WebUI.
+  </Changes>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
   <PostArgs/>
-  <CPUset/>
   <Requires/>
-  <Config Name="App Data" Target="/photon/data" Default="/mnt/user/appdata/photon" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/photon</Config>
-  <Config Name="WebUI Port" Target="2322" Default="2322" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">2322</Config>
-  <Config Name="Update Strategy" Target="UPDATE_STRATEGY" Default="DISABLED" Mode="" Description="Controls how index updates are handled. PARALLEL downloads the new index in the background then swaps with minimal downtime (requires 2x space). SEQUENTIAL stops Photon, deletes the existing index, downloads the new one, then restarts. DISABLED prevents automatic updates." Type="Variable" Display="always-hide" Required="true" Mask="false">DISABLED</Config>
-  <Config Name="Update Interval" Target="UPDATE_INTERVAL" Default="30d" Mode="" Description="How often to check for updates. To reduce server load, it is recommended to set this to a long interval (e.g., 720h for 30 days) or disable updates altogether if you do not need the latest data." Type="Variable" Display="always-hide" Required="true" Mask="false">30d</Config>
-  <Config Name="Region" Target="REGION" Default="planet" Mode="" Description="LARGE FILE SIZES! This might take up to 200GB depending on the selected region!&#13;&#10;&#13;&#10;Optional region for a specific dataset. Can be a continent (europe, asia), individual country/region (germany, usa, japan), country code (de, us, jp), or planet for worldwide data. See: https://github.com/rtuszik/photon-docker#available-regions" Type="Variable" Display="always-hide" Required="true" Mask="false">planet</Config>
-  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="" Description="Controls logging verbosity. (DEBUG, INFO, ERROR)" Type="Variable" Display="advanced-hide" Required="true" Mask="false">INFO</Config>
-  <Config Name="Force Update" Target="FORCE_UPDATE" Default="FALSE" Mode="" Description="Forces an index update on container startup, regardless of UPDATE_STRATEGY. (TRUE, FALSE)" Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
-  <Config Name="BASE_URL" Target="BASE_URL" Default="https://download1.graphhopper.com/public/" Mode="" Description="Custom base URL for index data downloads. Should point to the parent directory of index files. The default has been changed to a community mirror to reduce load on the GraphHopper servers." Type="Variable" Display="advanced-hide" Required="true" Mask="false">https://download1.graphhopper.com/public/</Config>
-  <Config Name="Skip MD5 Check" Target="SKIP_MD5_CHECK" Default="FALSE" Mode="" Description="Optionally skip MD5 verification of downloaded index files. (TRUE, FALSE)&#13;&#10;" Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
-  <Config Name="File Url" Target="FILE_URL" Default="" Mode="" Description="Photon executable parameters. See https://github.com/komoot/photon#running-photon." Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
-  <Config Name="Photon Params" Target="PHOTON_PARAMS" Default="" Mode="" Description="Optional notification URLs for Apprise to send status updates (e.g., download completion, errors). Supports multiple services like Pushover, Slack, email, etc. Example: pover://user@token,mailto://user:pass@gmail.com See: https://github.com/caronc/apprise" Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
-  <Config Name="Apprise Urls" Target="APPRISE_URLS" Default="" Mode="" Description="The User ID for the photon process. Set this to your host user's ID (id -u) to prevent permission errors when using bind mounts." Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
-  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="The Group ID for the photon process. Set this to your host group's ID (id -g) to prevent permission errors when using bind mounts." Type="Variable" Display="advanced-hide" Required="true" Mask="false">99</Config>
-  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="" Type="Variable" Display="advanced-hide" Required="true" Mask="false">100</Config>
+  <Config Name="App Data" Target="/photon/data" Default="/mnt/cache/appdata/photon" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/cache/appdata/photon</Config>
+  <Config Name="WebUI Port" Target="2322" Default="2322" Mode="tcp" Description="Example usage: http://[IP]:[PORT]/api?q=Harare" Type="Port" Display="always" Required="true" Mask="false">2322</Config>
+  <Config Name="Update Strategy" Target="UPDATE_STRATEGY" Default="DISABLED|SEQUENTIAL|PARALLEL" Mode="" Description="Controls how index updates are handled. PARALLEL downloads the new index in the background then swaps with minimal downtime (requires 2x space). SEQUENTIAL stops Photon, deletes the existing index, downloads the new one, then restarts. DISABLED prevents automatic updates." Type="Variable" Display="always-hide" Required="true" Mask="false"/>
+  <Config Name="Update Interval" Target="UPDATE_INTERVAL" Default="30d" Mode="" Description="Minimum age of the local index before checking for a newer version. After that age is reached, the mirror is checked at most hourly until an update is available. Example: 30d or 720h." Type="Variable" Display="always-hide" Required="true" Mask="false">30d</Config>
+  <Config Name="Region" Target="REGION" Default="planet|africa|asia|australia-oceania|europe|north-america|south-america|andorra|argentina|austria|canada|denmark|france-monacco|germany|india|japan|luxemburg|mexico|netherlands|russia|slovakia|spain|usa" Mode="" Description="LARGE FILE SIZES! This might take up to 200GB depending on the selected region!&#13;&#10;&#13;&#10;Optional region for a specific dataset. Can be a continent (europe, asia), individual country/region (germany, usa, japan), country code (de, us, jp), or planet for worldwide data. See: https://github.com/rtuszik/photon-docker#available-regions" Type="Variable" Display="always-hide" Required="true" Mask="false">planet</Config>
+  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO|DEBUG|ERROR" Mode="" Description="Controls logging verbosity. (DEBUG, INFO, ERROR)" Type="Variable" Display="advanced-hide" Required="true" Mask="false">INFO</Config>
+  <Config Name="Photon Listen IP" Target="PHOTON_LISTEN_IP" Default="0.0.0.0" Mode="" Description="IP address that the Photon HTTP server listens on; 0.0.0.0 listens on all container interfaces." Type="Variable" Display="advanced-hide" Required="true" Mask="false">0.0.0.0</Config>
+  <Config Name="Force Update" Target="FORCE_UPDATE" Default="FALSE|TRUE" Mode="" Description="Forces an index update on container startup, regardless of UPDATE_STRATEGY. (TRUE, FALSE)" Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
+  <Config Name="Download Max Retries" Target="DOWNLOAD_MAX_RETRIES" Default="3" Mode="" Description="Maximum number of retries after failed index downloads." Type="Variable" Display="advanced-hide" Required="true" Mask="false">3</Config>
+  <Config Name="Checksum Max Retries" Target="CHECKSUM_MAX_RETRIES" Default="3" Mode="" Description="Maximum retries after an index download fails MD5 verification. Ignored if SKIP_MD5_CHECK is TRUE." Type="Variable" Display="advanced-hide" Required="true" Mask="false">3</Config>
+  <Config Name="Initial Download" Target="INITIAL_DOWNLOAD" Default="TRUE|FALSE" Mode="" Description="Download the initial prebuilt index when the Photon data directory is empty. Set to FALSE for a manual import." Type="Variable" Display="advanced-hide" Required="true" Mask="false">TRUE</Config>
+  <Config Name="BASE_URL" Target="BASE_URL" Default="https://download1.graphhopper.com/public/" Mode="" Description="Base URL for downloading prebuilt index files; must point to the index archive directory. This configured GraphHopper URL overrides the upstream community-mirror default." Type="Variable" Display="advanced-hide" Required="true" Mask="false">https://download1.graphhopper.com/public/</Config>
+  <Config Name="Skip MD5 Check" Target="SKIP_MD5_CHECK" Default="FALSE|TRUE" Mode="" Description="Optionally skip MD5 verification of downloaded index files. (TRUE, FALSE)&#13;&#10;" Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
+  <Config Name="Skip Space Check" Target="SKIP_SPACE_CHECK" Default="FALSE|TRUE" Mode="" Description="Skip the available-disk-space check before downloading an index. Normally leave FALSE." Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
+  <Config Name="File Url" Target="FILE_URL" Default="" Mode="" Description="Optional direct URL to a prebuilt .tar.bz2 index. When set, automatic updates are disabled; checksum verification is skipped unless MD5_URL is provided." Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
+  <Config Name="MD5 URL" Target="MD5_URL" Default="" Mode="" Description="Optional URL for the MD5 checksum file associated with FILE_URL. Leave empty when no custom checksum URL is needed." Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
+  <Config Name="Photon Params" Target="PHOTON_PARAMS" Default="" Mode="" Description="Optional extra arguments passed to the Photon executable. See https://github.com/komoot/photon#running-photon" Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
+  <Config Name="Java Params" Target="JAVA_PARAMS" Default="" Mode="" Description="Optional extra JVM parameters passed to Java when launching Photon (e.g. -Xmx4g). Leave empty for no additional parameters." Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
+  <Config Name="Apprise Urls" Target="APPRISE_URLS" Default="" Mode="" Description="Optional comma-separated Apprise notification URLs for downloads, updates and errors (e.g. pover://user@token). See https://github.com/caronc/apprise" Type="Variable" Display="advanced-hide" Required="false" Mask="false"/>
+  <Config Name="PUID" Target="PUID" Default="9011" Mode="" Description="User ID under which Photon runs. Set to the host user ID with write access to the bind-mounted data directory." Type="Variable" Display="advanced-hide" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="9011" Mode="" Description="Group ID under which Photon runs. Set to the host group ID with write access to the bind-mounted data directory." Type="Variable" Display="advanced-hide" Required="true" Mask="false">100</Config>
+  <Config Name="Enable Metrics" Target="ENABLE_METRICS" Default="FALSE|TRUE" Mode="" Description="Enable the Prometheus metrics endpoint at /metrics. (TRUE, FALSE)" Type="Variable" Display="advanced-hide" Required="true" Mask="false">FALSE</Config>
+  <TailscaleStateDir/>
 </Container>
