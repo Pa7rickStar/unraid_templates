@@ -25,7 +25,7 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
   <Beta>False</Beta>
   <Category>MediaApp:Photos MediaServer:Photos Productivity: Tools: Other: Status:Stable</Category>
   <ExtraSearchTerms>photo album share image gallery timeline location history google maps owntracks immich sidekick sidekiq companion postgres postgressql postgis database dawarich</ExtraSearchTerms>
-  <TemplateURL>https://raw.githubusercontent.com/pa7trickstar/unraid_templates/main/templates/dawarich_db.xml</TemplateURL>
+  <TemplateURL>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/main/templates/dawarich_db.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/postgis-icon.png</Icon>
   <Maintainer>
     <WebPage>https://github.com/pa7rickstar</WebPage>
