@@ -4,6 +4,10 @@
   <Repository>redis:7.4-alpine</Repository>
   <Registry>https://registry.hub.docker.com/_/redis/</Registry>
   <Branch>
+    <Tag>8-alpine</Tag>
+    <TagDescription>Redis 8-alpine in a light weight Alpine Linux container</TagDescription>
+  </Branch>
+  <Branch>
     <Tag>7.4-alpine</Tag>
     <TagDescription>Redis 7.4-alpine in a light weight Alpine Linux container</TagDescription>
   </Branch>
@@ -47,7 +51,7 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
 - dawarich_db - PostGIS database&#xD;
 - dawarich_redis - Redis database</Requires>
   <PostArgs>redis-server</PostArgs>
-  <Config Name="Redis Data Path" Target="/data" Default="/mnt/cache/appdata/dawarich/shared" Mode="rw" Description="Persistent Redis data directory. Stores Redis database snapshots so data is retained when the container is recreated." Type="Path" Display="always-hide" Required="true" Mask="false">/mnt/cache/appdata/dawarich/shared</Config>
-  <Config Name="Redis Port" Target="6379" Default="6379" Mode="tcp" Description="Optional host port for external Redis access. Containers on the same Docker network connect using port 6379." Type="Port" Display="always" Required="false" Mask="false">6379</Config>
+  <Config Name="Redis Data Path" Target="/data" Default="/mnt/cache/appdata/dawarich/shared" Mode="rw" Description="Persistent Redis data directory. Stores Redis database snapshots so data is retained when the container is recreated." Type="Path" Display="always-hide" Required="true" Mask="false"/>
+  <Config Name="Redis Port" Target="6379" Default="6379" Mode="tcp" Description="Optional host port for external Redis access. Containers on the same Docker network connect using port 6379." Type="Port" Display="always" Required="false" Mask="false"/>
   <TailscaleStateDir/>
 </Container>
