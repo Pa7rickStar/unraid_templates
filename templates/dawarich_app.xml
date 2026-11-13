@@ -61,7 +61,14 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
   <Maintainer>
     <WebPage>https://github.com/pa7rickstar</WebPage>
   </Maintainer>
-  <Changes>### 2026-11-09
+  <Changes>
+    ### 2026-11-13
+
+- Use the default bridge network for new installations.
+- Clarify the three-container requirements and custom network setup.
+- Clean up the template changelog and formatting.
+
+    ### 2026-11-09
 
 - Forked from nwithan8's Dawarich unRAID template: https://github.com/nwithan8/unraid_templates/blob/main/templates/dawarich.xml.
 - Configure Dawarich for production with embedded Sidekiq and three containers.
@@ -144,7 +151,7 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
 - dawarich_app (web application)&#xD;
 - dawarich_db (PostGIS database)&#xD;
 - dawarich_redis (Redis database)&#xD;
-It is recommended to create a custom network with: 'docker network create --driver bridge dawarich' before installing the container and selecting it during the installation: 'Network Type: Custom: dawarich'
+It is recommended to create a custom network with: 'docker network create --driver bridge dawarich' before installing the container and selecting it during the installation: 'Network Type: Custom: dawarich'</Requires>
   <Config Name="Web UI Port" Target="3000" Default="3000" Mode="tcp" Description="Host port for the Dawarich web interface (container port 3000)." Type="Port" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Imports Path" Target="/var/app/tmp/imports/watched" Default="/mnt/cache/appdata/dawarich/imports" Mode="rw" Description="Path to watch for imports" Type="Path" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Storage Path" Target="/var/app/storage" Default="/mnt/cache/appdata/dawarich/storage" Mode="rw" Description="Path to store application data" Type="Path" Display="always-hide" Required="true" Mask="false"/>
@@ -174,7 +181,6 @@ It is recommended to create a custom network with: 'docker network create --driv
   <Config Name="Background Processing Concurrency" Target="BACKGROUND_PROCESSING_CONCURRENCY" Default="2" Mode="" Description="Background job threads. More info on Sidekiq docs" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Sidekiq Username" Target="SIDEKIQ_USERNAME" Default="" Mode="" Description="Sidekiq dashboard username" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Sidekiq Password" Target="SIDEKIQ_PASSWORD" Default="" Mode="" Description="Sidekiq dashboard password" Type="Variable" Display="advanced" Required="false" Mask="true"/>
-  <Config Name="OIDC Client ID" Target="OIDC_CLIENT_ID" Default="" Mode="" Description="OIDC client ID from your identity provider" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Archive Raw Data" Target="ARCHIVE_RAW_DATA" Default="false|true" Mode="" Description="Enable archival of raw import data. When enabled, original import files are preserved for potential re-processing." Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="Archive Encryption Key" Target="ARCHIVE_ENCRYPTION_KEY" Default="" Mode="" Description="Encryption key for raw data archives. Required when ARCHIVE_RAW_DATA is true. Preserve the original key to keep existing archives readable." Type="Variable" Display="advanced" Required="false" Mask="true"/>
   <Config Name="Photon API Host" Target="PHOTON_API_HOST" Default="" Mode="" Description="Photon API host. Useful if you're self-hosting your own Photon instance" Type="Variable" Display="advanced" Required="false" Mask="false"/>
@@ -194,6 +200,7 @@ It is recommended to create a custom network with: 'docker network create --driv
   <Config Name="OTP Encryption Primary Key" Target="OTP_ENCRYPTION_PRIMARY_KEY" Default="" Mode="" Description="Primary key for encrypting OTP secrets. Set explicitly to enable two-factor authentication." Type="Variable" Display="advanced" Required="false" Mask="true"/>
   <Config Name="OTP Encryption Deterministic Key" Target="OTP_ENCRYPTION_DETERMINISTIC_KEY" Default="" Mode="" Description="Deterministic key for OTP encryption. Set explicitly to enable two-factor authentication." Type="Variable" Display="advanced" Required="false" Mask="true"/>
   <Config Name="OTP Encryption Key Derivation Salt" Target="OTP_ENCRYPTION_KEY_DERIVATION_SALT" Default="" Mode="" Description="Salt for OTP key derivation. Set explicitly to enable two-factor authentication." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="OIDC Client ID" Target="OIDC_CLIENT_ID" Default="" Mode="" Description="OIDC client ID from your identity provider" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="OIDC Client Secret" Target="OIDC_CLIENT_SECRET" Default="" Mode="" Description="OIDC client secret from your identity provider" Type="Variable" Display="advanced" Required="false" Mask="true"/>
   <Config Name="OIDC Issuer" Target="OIDC_ISSUER" Default="" Mode="" Description="OIDC issuer URL (enables auto-discovery)" Type="Variable" Display="advanced" Required="false" Mask="false"/>
   <Config Name="OIDC Redirect URI" Target="OIDC_REDIRECT_URI" Default="" Mode="" Description="Callback URL. Defaults to {APPLICATION_URL}/users/auth/openid_connect/callback" Type="Variable" Display="advanced" Required="false" Mask="false"/>

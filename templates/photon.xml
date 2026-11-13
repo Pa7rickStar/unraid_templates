@@ -21,6 +21,12 @@ This CA uses rtuszik's unofficial Docker image (see Project) for running Photon 
   <WebUI>http://[IP]:[PORT:2322]/api?q=Berlin</WebUI>
   <Icon>https://raw.githubusercontent.com/Pa7rickStar/unraid_templates/refs/heads/main/images/photon-icon.png</Icon>
   <Changes>
+    ### 2026-11-13
+
+- Add optional Dawarich network configuration instructions for CA templates and Docker Compose.
+- Clarify how to connect Photon to Dawarich without exposing the Photon port.
+- Restore the initial release entry in the changelog.
+
     ### 2026-11-09
 
     - Add selectable regions, update strategies, and logging levels.
@@ -36,7 +42,10 @@ This CA uses rtuszik's unofficial Docker image (see Project) for running Photon 
   </Changes>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
   <PostArgs/>
-  <Requires/>
+  <Requires>Optional integration with Dawarich: When using Dawarich with the unRAID CA templates and a custom network, select "Custom: dawarich" under "Network Type".&#xD;
+When using Docker Compose, select the network created by Compose, usually "&lt;project_name&gt;_dawarich" (e.g. "dawarich_dawarich").&#xD;
+&#xD;
+This allows Dawarich to access Photon using "photon:2322" without exposing Photon's port to the host.</Requires>
   <Config Name="App Data" Target="/photon/data" Default="/mnt/cache/appdata/photon" Mode="rw" Description="" Type="Path" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="WebUI Port" Target="2322" Default="2322" Mode="tcp" Description="Example usage: http://[IP]:[PORT]/api?q=Berlin" Type="Port" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Update Strategy" Target="UPDATE_STRATEGY" Default="DISABLED|SEQUENTIAL|PARALLEL" Mode="" Description="Controls how index updates are handled. PARALLEL downloads the new index in the background then swaps with minimal downtime (requires 2x space). SEQUENTIAL stops Photon, deletes the existing index, downloads the new one, then restarts. DISABLED prevents automatic updates." Type="Variable" Display="always-hide" Required="true" Mask="false"/>

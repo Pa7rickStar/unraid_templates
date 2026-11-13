@@ -36,6 +36,13 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
     <WebPage>https://github.com/pa7rickstar</WebPage>
   </Maintainer>
   <Changes>
+    ### 2026-11-13
+
+- Update the default Redis image to 8-alpine, matching Dawarich's official Compose setup.
+- Keep Redis 7.4-alpine available as an alternative.
+- Use the default bridge network for new installations.
+- Clarify the three-container requirements and custom network setup.
+
     ### 2026-11-08
 
     Update Dawarich requirements and documentation links
@@ -44,7 +51,7 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
 
     Initial release
   </Changes>
-  <ExtraParams>--restart=always --health-cmd='redis-cli ping || exit 1' --health-interval=10s --health-retries=5 --health-start-period=30s --health-timeout=10s</ExtraParams>
+  <ExtraParams>--restart=always --health-cmd='redis-cli --raw incr ping' --health-interval=10s --health-retries=5 --health-start-period=30s --health-timeout=10s</ExtraParams>
   <DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
   <DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
   <Requires>For Dawarich production 3 containers are required:&#xD;
@@ -52,7 +59,7 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
 - dawarich_db (PostGIS database)&#xD;
 - dawarich_redis (Redis database)&#xD;
 It is recommended to create a custom network with: 'docker network create --driver bridge dawarich' before installing the container and selecting it during the installation: 'Network Type: Custom: dawarich'</Requires>
-  <PostArgs>redis-server</PostArgs>
+  <PostArgs>redis-server --save 900 1 --save 300 10 --appendonly no</PostArgs>
   <Config Name="Redis Data Path" Target="/data" Default="/mnt/cache/appdata/dawarich/shared" Mode="rw" Description="Persistent Redis data directory. Stores Redis database snapshots so data is retained when the container is recreated." Type="Path" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Redis Port" Target="6379" Default="6379" Mode="tcp" Description="Optional host port for external Redis access. Containers on the same Docker network connect using port 6379." Type="Port" Display="always" Required="false" Mask="false"/>
   <TailscaleStateDir/>
