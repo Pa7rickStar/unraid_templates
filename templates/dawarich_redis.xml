@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>dawarich_redis</Name>
-  <Repository>redis:7.4-alpine</Repository>
+  <Repository>redis:8-alpine</Repository>
   <Registry>https://registry.hub.docker.com/_/redis/</Registry>
+  <DefaultTagDescription>8-alpine</DefaultTagDescription>
   <Branch>
     <Tag>8-alpine</Tag>
     <TagDescription>Redis 8-alpine in a light weight Alpine Linux container</TagDescription>
@@ -11,7 +12,7 @@
     <Tag>7.4-alpine</Tag>
     <TagDescription>Redis 7.4-alpine in a light weight Alpine Linux container</TagDescription>
   </Branch>
-  <Network>dawarich</Network>
+  <Network>bridge</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/193769-support-pa7rickstar-docker-templates/</Support>
@@ -44,12 +45,13 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
     Initial release
   </Changes>
   <ExtraParams>--restart=always --health-cmd='redis-cli ping || exit 1' --health-interval=10s --health-retries=5 --health-start-period=30s --health-timeout=10s</ExtraParams>
-<DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
-<DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
-  <Requires>For Dawarich production 3 docker containers are required:&#xD;
-- dawarich_app - Dawarich web application including sidekiq worker for background jobs
-- dawarich_db - PostGIS database&#xD;
-- dawarich_redis - Redis database</Requires>
+  <DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
+  <DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
+  <Requires>For Dawarich production 3 containers are required:&#xD;
+- dawarich_app (web application)&#xD;
+- dawarich_db (PostGIS database)&#xD;
+- dawarich_redis (Redis database)&#xD;
+It is recommended to create a custom network with: 'docker network create --driver bridge dawarich' before installing the container and selecting it during the installation: 'Network Type: Custom: dawarich'</Requires>
   <PostArgs>redis-server</PostArgs>
   <Config Name="Redis Data Path" Target="/data" Default="/mnt/cache/appdata/dawarich/shared" Mode="rw" Description="Persistent Redis data directory. Stores Redis database snapshots so data is retained when the container is recreated." Type="Path" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Redis Port" Target="6379" Default="6379" Mode="tcp" Description="Optional host port for external Redis access. Containers on the same Docker network connect using port 6379." Type="Port" Display="always" Required="false" Mask="false"/>

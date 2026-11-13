@@ -3,7 +3,6 @@
   <Name>dawarich_app</Name>
   <Repository>freikin/dawarich:latest</Repository>
   <Registry>https://hub.docker.com/r/freikin/dawarich</Registry>
-
   <DefaultTagDescription>Latest release</DefaultTagDescription>
   <Branch>
     <Tag>latest</Tag>
@@ -37,7 +36,7 @@
     <Tag>1.17.0</Tag>
     <TagDescription>Embedded Sidekiq and database migrations</TagDescription>
     </Branch>
-  <Network>dawarich</Network>
+  <Network>bridge</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/193769-support-pa7rickstar-docker-templates/</Support>
@@ -72,79 +71,80 @@ https://dawarich.app/docs/self-hosting/maintenance/backup-and-restore/</Overview
 
 ### Upstream template history
 
-        ### 2026-07-17
+        #### 2026-07-17
 
         - Add concurrency environmental variables
 
-        ### 2026-05-11
+        #### 2026-05-11
 
         - Remove Prometheus metrics
 
-        ### 2026-03-30
+        #### 2026-03-30
 
         - Add 2FA
 
-        ### 2025-12-03
+        #### 2025-12-03
 
         - Document additional optional environment variables (e.g. OIDC support)
 
-        ### 2025-08-03
+        #### 2025-08-03
 
         - Change default tag back to `latest`
 
-        ### 2025-06-09
+        #### 2025-06-09
 
         - Add new env vars for latest release
         - Add Redis URL configuration
 
-        ### 2025-06-04
+        #### 2025-06-04
 
         Fix bad Variable for database paths
 
-        ### 2025-06-02
+        #### 2025-06-02
 
         Update for 0.27.2 - Remove Redis and Sidekiq requirements, add database paths
 
-        ### 2025-05-19
+        #### 2025-05-19
 
         Remove DISTANCE_UNIT variable
 
-        ### 2025-05-14
+        #### 2025-05-14
 
         Clarify PostGIS requirement
 
-        ### 2025-04-17
+        #### 2025-04-17
 
         - Add SELF_HOSTED environmental variable
         - Add Storage Path path
 
-        ### 2025-04-10
+        #### 2025-04-10
 
         Fix entrypoint script
 
-        ### 2025-03-04
+        #### 2025-03-04
 
         Fix post arguments
 
-        ### 2025-01-10
+        #### 2025-01-10
 
         Remove unnecessary gems path
 
-        ### 2025-01-05
+        #### 2025-01-05
 
         Add missing environment variables
 
-        ### 2024-12-30
+        #### 2024-12-30
 
         Initial release</Changes>
   <ExtraParams>--entrypoint=web-entrypoint.sh --restart=unless-stopped --stop-timeout=60 --health-cmd='wget -qO- http://127.0.0.1:3000/api/v1/health | grep -q "\"status\"[[:space:]]*:[[:space:]]*\"ok\"" || exit 1' --health-interval=10s --health-retries=30 --health-start-period=30s --health-timeout=10s</ExtraParams>
   <PostArgs>bin/rails server -p 3000 -b ::</PostArgs>
   <DonateText>If you find my own projects useful, you're welcome to buy me a coffee. If I'm only providing an Unraid template for someone else's project, please consider donating to the original developer instead.</DonateText>
   <DonateLink>https://www.buymeacoffee.com/pa7rickstar</DonateLink>
-  <Requires>For Dawarich production 3 docker containers are required:&#13;
-- dawarich_app - Dawarich web application including Sidekiq worker for background jobs&#13;
-- dawarich_db - PostGIS database&#13;
-- dawarich_redis - Redis database</Requires>
+  <Requires>For Dawarich production 3 containers are required:&#xD;
+- dawarich_app (web application)&#xD;
+- dawarich_db (PostGIS database)&#xD;
+- dawarich_redis (Redis database)&#xD;
+It is recommended to create a custom network with: 'docker network create --driver bridge dawarich' before installing the container and selecting it during the installation: 'Network Type: Custom: dawarich'
   <Config Name="Web UI Port" Target="3000" Default="3000" Mode="tcp" Description="Host port for the Dawarich web interface (container port 3000)." Type="Port" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Imports Path" Target="/var/app/tmp/imports/watched" Default="/mnt/cache/appdata/dawarich/imports" Mode="rw" Description="Path to watch for imports" Type="Path" Display="always-hide" Required="true" Mask="false"/>
   <Config Name="Storage Path" Target="/var/app/storage" Default="/mnt/cache/appdata/dawarich/storage" Mode="rw" Description="Path to store application data" Type="Path" Display="always-hide" Required="true" Mask="false"/>

@@ -29,6 +29,10 @@ This CA uses rtuszik's unofficial Docker image (see Project) for running Photon 
     - Add optional Apprise notifications and Prometheus metrics.
     - Update environment variable descriptions and defaults.
     - Update documentation links, icon, and WebUI.
+
+    ### 2025-09-25
+
+    Initial release
   </Changes>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
   <PostArgs/>
